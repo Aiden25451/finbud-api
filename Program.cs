@@ -1,9 +1,24 @@
+using FinbudApi.Contracts;
+using FinbudApi.Models;
+using Supabase;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddScoped<Supabase.Client>(_ => 
+    new Supabase.Client(
+        builder.Configuration["Supabase:Url"] ?? throw new InvalidOperationException("Supabase URL is not configured."),
+        builder.Configuration["Supabase:Key"] ?? throw new InvalidOperationException("Supabase Key is not configured."),
+        new SupabaseOptions
+        {
+            AutoRefreshToken = true,
+            AutoConnectRealtime = true
+        })
+);
 
 var app = builder.Build();
 
@@ -14,31 +29,63 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.MapPost("/monkeys", async (
+    CreateMonkeyRequest request,
+    Supabase.Client client) =>
+    {
+        var monkey = new Monkey
+        {
+            Name = request.Name,
+            Type = request.Type,
+            Age = request.Age,
+        };
+
+        var response = await client.From<Monkey>().Insert(monkey);
+
+        var newMonkey = response.Models.First();
+
+        return Results.Ok(newMonkey.Id);
+    }
+);
+
+app.MapGet("/monkeys/{id}", async (long id, Supabase.Client client) =>
+{
+    var response = await client
+        .From<Monkey>()
+        .Where(n => n.Id == id)
+        .Get();
+
+    var monkey = response.Models.FirstOrDefault();
+
+    if (monkey == null)
+    {
+        return Results.NotFound();
+    }
+
+    var monkeyResponse = new MonkeyResponse
+    {
+        Id = monkey.Id,
+        Name = monkey.Name,
+        Type = monkey.Type,
+        Age = monkey.Age,
+        CreatedAt = monkey.CreatedAt
+    };
+
+    return Results.Ok(monkeyResponse);
+});
+
+app.MapDelete("/monkeys/{id}", async (long id, Supabase.Client client) =>
+{
+    await client
+        .From<Monkey>()
+        .Where(n => n.Id == id)
+        .Delete();
+
+    return Results.NoContent();
+});
+
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+app.UseAuthorization();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
