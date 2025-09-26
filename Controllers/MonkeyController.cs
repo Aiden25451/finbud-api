@@ -1,6 +1,7 @@
 
 using FinbudApi.Dto.Monkeys;
 using FinbudApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinbudApi.Controllers;
@@ -20,6 +21,13 @@ public class MonkeyController : ControllerBase
     public IActionResult Test()
     {
         return Ok("Controller is working!");
+    }
+
+    [HttpGet("test-private")]
+    [Authorize]
+    public IActionResult TestPrivate()
+    {
+        return Ok("Private controller is working!");
     }
 
     [HttpPost]
