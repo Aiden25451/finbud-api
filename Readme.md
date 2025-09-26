@@ -19,7 +19,7 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 2. Visit the "How we are going to build a new .net backend" doc to add secrets files
 3. Download .NET 8
 4. Install auth0 client
-5. Login to auth client "auth login" use AUTH0_DOMAIN
+5. Login to auth client "auth0 login" use AUTH0_DOMAIN
 6. Get JWT "auth0 test token -a \<AUTH0_AUDIENCE\> -s openid"
 7. Use "nuget restore" to install needed packages
 8. Launch app with "dotnet run"
