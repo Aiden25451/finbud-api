@@ -1,5 +1,6 @@
 
-using FinbudApi.Dto.Monkeys;
+using System.Security.Claims;
+using FinbudApi.Dto.Monkey;
 using FinbudApi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -31,16 +32,23 @@ public class MonkeyController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateMonkey([FromBody] CreateMonkeyRequestDto request)
+    [Authorize]
+    public async Task<IActionResult> CreateMonkey([FromBody] CreateMonkeyDto request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var monkeyId = await _monkeyService.CreateMonkeyAsync(request);
-        return CreatedAtAction(nameof(GetMonkey), new { id = monkeyId }, new { Id = monkeyId });
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return Unauthorized();
+
+        var monkeyResponse = await _monkeyService.CreateMonkeyAsync(request, currentUserId);
+        return Ok(monkeyResponse);
     }
 
     [HttpGet("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> GetMonkey(int id)
     {
         var monkey = await _monkeyService.GetMonkeyByIdAsync(id);
@@ -51,6 +59,7 @@ public class MonkeyController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
+    [Authorize]
     public async Task<IActionResult> DeleteMonkey(int id)
     {
         var deleted = await _monkeyService.DeleteMonkeyAsync(id);

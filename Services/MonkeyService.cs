@@ -1,6 +1,6 @@
 using FinbudApi.Data;
-using FinbudApi.Dto.Monkeys;
-using FinbudApi.Models;
+using FinbudApi.Dto.Monkey;
+using FinbudApi.Mapping;
 
 namespace FinbudApi.Services;
 
@@ -13,32 +13,23 @@ public class MonkeyService : IMonkeyService
         _context = context;
     }
 
-    public async Task<int> CreateMonkeyAsync(CreateMonkeyRequestDto request)
+    public async Task<MonkeyResponseDto?> CreateMonkeyAsync(CreateMonkeyDto request, string userId)
     {
-        var monkey = new Monkey
-        {
-            Name = request.Name,
-            Type = request.Type,
-            Age = request.Age,
-        };
+
+        var monkey = request.CreateMonkeyDtoToMonkeyEntity(userId);
 
         var createdMonkey = await _context.CreateMonkeyAsync(monkey);
-        return createdMonkey.Id;
+
+        return createdMonkey.MonkeyEntityToMonkeyResponseDto();
     }
 
-    public async Task<ViewMonkeyDto?> GetMonkeyByIdAsync(int id)
+    public async Task<MonkeyResponseDto?> GetMonkeyByIdAsync(int id)
     {
         var monkey = await _context.GetMonkeyByIdAsync(id);
+
         if (monkey == null) return null;
 
-        return new ViewMonkeyDto
-        {
-            Id = monkey.Id,
-            Name = monkey.Name,
-            Type = monkey.Type,
-            Age = monkey.Age,
-            CreatedAt = monkey.CreatedAt
-        };
+        return monkey.MonkeyEntityToMonkeyResponseDto();
     }
 
     public async Task<bool> DeleteMonkeyAsync(int id)

@@ -1,10 +1,10 @@
-using FinbudApi.Dto.Monkeys;
+using FinbudApi.Dto.Monkey;
 
 namespace FinbudApi.Services;
 
 public interface IMonkeyService
 {
-    Task<int> CreateMonkeyAsync(CreateMonkeyRequestDto request);
-    Task<ViewMonkeyDto?> GetMonkeyByIdAsync(int id);
+    Task<MonkeyResponseDto?> CreateMonkeyAsync(CreateMonkeyDto request, string userId);
+    Task<MonkeyResponseDto?> GetMonkeyByIdAsync(int id);
     Task<bool> DeleteMonkeyAsync(int id);
 }
