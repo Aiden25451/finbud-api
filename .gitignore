@@ -3,5 +3,7 @@ obj/
 
 appsettings.json
 appsettings.Development.json
+aws-lambda-tools-defaults.json
+serverless.template
 
 commands.txt
