@@ -2,8 +2,14 @@ using FinbudApi.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddSwaggerServices();
+
+}
+
+builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 builder.Services.AddControllers();
-builder.Services.AddSwaggerServices();
 builder.Services.AddSupabase(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddAuth0(builder.Configuration);
