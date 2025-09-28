@@ -21,7 +21,7 @@ public class MonkeyController : ControllerBase
     [HttpGet("test")]
     public IActionResult Test()
     {
-        return Ok("Hey Vanessa <3");
+        return Ok("Public controller is working!");
     }
 
     [HttpGet("test-private")]
