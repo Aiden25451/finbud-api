@@ -48,4 +48,30 @@ public class SupabaseDbContext
         var response = await _client.From<UserInfo>().Insert(userinfo);
         return response.Models.First();
     }
+
+    public async Task<UserInfo?> GetUserInfoByUserIdAsync(string userId)
+    {
+        var response = await _client
+            .From<UserInfo>()
+            .Where(n => n.UserId == userId)
+            .Get();
+
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<bool> DeleteUserInfoAsync(string userId)
+    {
+        try
+        {
+            await _client
+                .From<UserInfo>()
+                .Where(n => n.UserId == userId)
+                .Delete();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
 }

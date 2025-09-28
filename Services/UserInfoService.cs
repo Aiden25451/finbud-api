@@ -23,17 +23,17 @@ public class UserInfoService : IUserInfoService
         return createduserinfo.UserInfoEntityToGetUserInfoDTO();
     }
 
-//     public async Task<MonkeyResponseDto?> GetMonkeyByIdAsync(int id)
-//     {
-//         var monkey = await _context.GetMonkeyByIdAsync(id);
+    public async Task<GetUserInfoDTO?> GetUserInfoByUserIdAsync(string userId)
+    {
+        var userinfo = await _context.GetUserInfoByUserIdAsync(userId);
 
-//         if (monkey == null) return null;
+        if (userinfo == null) return null;
 
-//         return monkey.MonkeyEntityToMonkeyResponseDto();
-//     }
+        return userinfo.UserInfoEntityToGetUserInfoDTO();
+    }
 
-//     public async Task<bool> DeleteMonkeyAsync(int id)
-//     {
-//         return await _context.DeleteMonkeyAsync(id);
-//     }
+    public async Task<bool> DeleteUserInfoAsync(string userId)
+    {
+        return await _context.DeleteUserInfoAsync(userId);
+    }
 }

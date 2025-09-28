@@ -9,8 +9,10 @@ public static class UserInfoMappingExtensions
     {
         return new UserInfo
         {
-            Username = dto.Username,
+            UserName = dto.UserName,
             CreatedAt = DateTime.UtcNow,
+            UserId = userId,
+            UserEmail = dto.UserEmail,
         };
     }
 
@@ -19,8 +21,10 @@ public static class UserInfoMappingExtensions
         return new GetUserInfoDTO
         {
             Id = userinfo.Id,
-            Username = userinfo.Username,
+            UserName = userinfo.UserName,
             CreatedAt = userinfo.CreatedAt,
+            UserEmail = userinfo.UserEmail,
+            UserId = userinfo.UserId,
         };
     }
 }

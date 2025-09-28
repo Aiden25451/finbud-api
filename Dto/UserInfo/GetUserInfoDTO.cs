@@ -3,16 +3,20 @@ using System.ComponentModel.DataAnnotations;
 
 public class GetUserInfoDTO
 {
-    public long Id { get; set; }
-    public required string Username { get; set; }
-    public DateTime CreatedAt { get; set; }
-}
-
-
-public class CreateUserInfoDTO
-{
-    [Required]
     [MaxLength(100)]
-    public required string Username { get; set; }
+    public long Id { get; set; }
+
+    [MaxLength(100)]
+    public string UserName { get; set; }
+
+    [MaxLength(100)]
+    public DateTime CreatedAt { get; set; }
+
+    [MaxLength(100)]
+    public string UserEmail {get; set; }
+
+    [Required]
+    public required string UserId {get; set;}
 }
+
 

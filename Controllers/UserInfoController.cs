@@ -48,25 +48,25 @@ public class UserInfoController : ControllerBase
         return Ok(userInfoResponse);
     }
 
-    // [HttpGet("{id:int}")]
-    // [Authorize]
-    // public async Task<IActionResult> GetMonkey(int id)
-    // {
-    //     var monkey = await _monkeyService.GetMonkeyByIdAsync(id);
-    //     if (monkey == null)
-    //         return NotFound();
+    [HttpGet("{userId}")]
+    [Authorize]
+    public async Task<IActionResult> GetUserInfoByUserId(string userId)
+    {
+        var userinfo = await _userInfoService.GetUserInfoByUserIdAsync(userId);
+        if (userinfo == null)
+            return NotFound();
 
-    //     return Ok(monkey);
-    // }
+        return Ok(userinfo);
+    }
 
-    // [HttpDelete("{id:int}")]
-    // [Authorize]
-    // public async Task<IActionResult> DeleteMonkey(int id)
-    // {
-    //     var deleted = await _monkeyService.DeleteMonkeyAsync(id);
-    //     if (!deleted)
-    //         return NotFound();
+    [HttpDelete("{userId}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteUserInfo(string userId)
+    {
+        var deleted = await _userInfoService.DeleteUserInfoAsync(userId);
+        if (!deleted)
+            return NotFound();
 
-    //     return NoContent();
-    // }
+        return NoContent();
+    }
 }
