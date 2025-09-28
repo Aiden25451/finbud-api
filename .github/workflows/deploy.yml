@@ -27,7 +27,7 @@ jobs:
       - name: Deploy to AWS Lambda
         run: |
           dotnet lambda deploy-function FinbudApi \
-            --region ${{ secrets.AWS_REGION }} \
+            --region ${{ secrets.AWS_REGION_67 }} \
             --function-handler FinbudApiLambda \
             --function-runtime dotnet8 \
             --function-memory-size 512 \
