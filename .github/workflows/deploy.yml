@@ -30,7 +30,6 @@ jobs:
             --region ${{ secrets.AWS_REGION }} \
             --function-handler FinbudApiLambda \
             --function-runtime dotnet8 \
-            --role ${{ secrets.AWS_LAMBDA_ROLE }} \
             --function-memory-size 512 \
             --function-timeout 30 \
             --function-url-enable true \
