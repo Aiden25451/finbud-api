@@ -42,4 +42,10 @@ public class SupabaseDbContext
             return false;
         }
     }
+
+    public async Task<UserInfo> CreateUserInfoAsync(UserInfo userinfo)
+    {
+        var response = await _client.From<UserInfo>().Insert(userinfo);
+        return response.Models.First();
+    }
 }
