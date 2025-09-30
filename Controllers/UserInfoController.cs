@@ -11,18 +11,11 @@ namespace FinbudApi.Controllers;
 [Route("api/[controller]")]
 public class UserInfoController : ControllerBase
 {
-    // private readonly IMonkeyService _monkeyService;
     private readonly IUserInfoService _userInfoService;
 
     public UserInfoController(IUserInfoService userInfoService)
     {
         _userInfoService = userInfoService;
-    }
-
-    [HttpGet("test")]
-    public IActionResult Test()
-    {
-        return Ok("Controller is working!");
     }
 
     [HttpGet("test-private")]

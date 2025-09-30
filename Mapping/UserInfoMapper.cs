@@ -12,7 +12,6 @@ public static class UserInfoMappingExtensions
             UserName = dto.UserName,
             CreatedAt = DateTime.UtcNow,
             UserId = userId,
-            UserEmail = dto.UserEmail,
         };
     }
 
@@ -20,10 +19,8 @@ public static class UserInfoMappingExtensions
     {
         return new GetUserInfoDTO
         {
-            Id = userinfo.Id,
             UserName = userinfo.UserName,
             CreatedAt = userinfo.CreatedAt,
-            UserEmail = userinfo.UserEmail,
             UserId = userinfo.UserId,
         };
     }
