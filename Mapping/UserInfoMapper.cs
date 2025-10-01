@@ -24,4 +24,14 @@ public static class UserInfoMappingExtensions
             UserId = userinfo.UserId,
         };
     }
+
+    public static UserInfo UpdateUserInfoUsernameDtoToUserInfoEntity(this UpdateUsernameDTO dto, string userId)
+    {
+        return new UserInfo
+        {
+            UserName = dto.UserName,
+            UserId = userId,
+        };
+    }
+
 }

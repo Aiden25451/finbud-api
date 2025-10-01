@@ -32,6 +32,15 @@ public class UserInfoService : IUserInfoService
         return userinfo.UserInfoEntityToGetUserInfoDTO();
     }
 
+    public async Task<GetUserInfoDTO?> UpdateUserInfoUsernameAsync(UpdateUsernameDTO request, string userId)
+    {
+        var userinfo = request.UpdateUserInfoUsernameDtoToUserInfoEntity(userId);
+
+        var updateduserinfo = await _context.UpdateUserInfoUsernameAsync(userinfo);
+
+        return updateduserinfo.UserInfoEntityToGetUserInfoDTO();
+    }
+
     public async Task<bool> DeleteUserInfoAsync(string userId)
     {
         return await _context.DeleteUserInfoAsync(userId);

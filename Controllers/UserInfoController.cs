@@ -52,6 +52,23 @@ public class UserInfoController : ControllerBase
         return Ok(userinfo);
     }
 
+    [HttpPut]
+    [Authorize]
+    public async Task<IActionResult> Update_UserInfo_Username([FromBody] UpdateUsernameDTO request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return Unauthorized();
+
+        var userInfoResponse = await _userInfoService.UpdateUserInfoUsernameAsync(request, currentUserId);
+        
+        return Ok(userInfoResponse);
+    }
+
     [HttpDelete("{userId}")]
     [Authorize]
     public async Task<IActionResult> DeleteUserInfo(string userId)

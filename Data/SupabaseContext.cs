@@ -49,6 +49,25 @@ public class SupabaseDbContext
         return response.Models.First();
     }
 
+    public async Task<UserInfo> UpdateUserInfoUsernameAsync(UserInfo userinfo)
+    {
+        string userid = userinfo.UserId.ToString();
+        string username = userinfo.UserName.ToString();
+
+        var entry = await _client
+        .From<UserInfo>()
+        .Where(u => u.UserId == userid)            
+        .Set(x => x.UserName, username)
+        .Update();
+
+        var response = await _client
+            .From<UserInfo>()
+            .Where(n => n.UserId == userinfo.UserId)
+            .Get();
+        
+        return response.Models.FirstOrDefault();
+    }
+
     public async Task<UserInfo?> GetUserInfoByUserIdAsync(string userId)
     {
         var response = await _client
