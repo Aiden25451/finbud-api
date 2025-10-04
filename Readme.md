@@ -33,10 +33,10 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 ## Endpoints
 
 UserInfo Controller:
-GET /api/UserInfo/{userId}
-POST /api/UserInfo
-PUT /api/UserInfo
-DELETE /api/UserInfo{userId}
+GET /api/UserInfo/ --> 200 OK, 404 NOT FOUND
+POST /api/UserInfo --> 200 OK, 400 BAD REQUEST 
+PUT /api/UserInfo --> 200 OK, 404 NOT FOUND
+DELETE /api/UserInfo --> 204, 
 
 UserHistory Controller:
 GET /api/UserHistory/ --> 200 OK, 404 NOT FOUND

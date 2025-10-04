@@ -49,8 +49,15 @@ public class SupabaseDbContext
     // USER INFO
     public async Task<UserInfo> CreateUserInfoAsync(UserInfo userinfo)
     {
-        var response = await _client.From<UserInfo>().Insert(userinfo);
-        return response.Models.First();
+        try{
+            var response = await _client.From<UserInfo>().Insert(userinfo);
+            return response.Models.First(); 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error creating user info: " + ex.Message);
+            return null;
+        }
     }
 
     public async Task<UserInfo> UpdateUserInfoUsernameAsync(UserInfo userinfo)

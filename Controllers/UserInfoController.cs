@@ -38,14 +38,25 @@ public class UserInfoController : ControllerBase
             return StatusCode(401);
 
         var userInfoResponse = await _userInfoService.CreateUserInfoAsync(request, currentUserId);
+
+        if(userInfoResponse == null) return StatusCode(400, "User Info may already exist in Database.");
+
         return StatusCode(200,userInfoResponse);
     }
 
-    [HttpGet("{userId}")]
+    [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetUserInfoByUserId(string userId)
+    public async Task<IActionResult> GetUserInfoByUserId()
     {
-        var userinfo = await _userInfoService.GetUserInfoByUserIdAsync(userId);
+        if (!ModelState.IsValid)
+            return StatusCode(400,ModelState);
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return StatusCode(401);
+
+        var userinfo = await _userInfoService.GetUserInfoByUserIdAsync(currentUserId);
         if (userinfo == null)
             return StatusCode(404);
 
@@ -66,14 +77,24 @@ public class UserInfoController : ControllerBase
 
         var userInfoResponse = await _userInfoService.UpdateUserInfoUsernameAsync(request, currentUserId);
         
+        if(userInfoResponse == null) return StatusCode(404, "User Info not found in database.");
+        
         return StatusCode(200,userInfoResponse);
     }
 
-    [HttpDelete("{userId}")]
+    [HttpDelete]
     [Authorize]
-    public async Task<IActionResult> DeleteUserInfo(string userId)
+    public async Task<IActionResult> DeleteUserInfo()
     {
-        var deleted = await _userInfoService.DeleteUserInfoAsync(userId);
+        if (!ModelState.IsValid)
+            return StatusCode(400,ModelState);
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return StatusCode(401);
+
+        var deleted = await _userInfoService.DeleteUserInfoAsync(currentUserId);
         if (!deleted)
             return StatusCode(404);
 

@@ -20,6 +20,8 @@ public class UserInfoService : IUserInfoService
 
         var createduserinfo = await _context.CreateUserInfoAsync(userinfo);
 
+        if(createduserinfo == null) return null;
+
         return createduserinfo.UserInfoEntityToGetUserInfoDTO();
     }
 
@@ -37,6 +39,8 @@ public class UserInfoService : IUserInfoService
         var userinfo = request.UpdateUserInfoUsernameDtoToUserInfoEntity(userId);
 
         var updateduserinfo = await _context.UpdateUserInfoUsernameAsync(userinfo);
+
+        if(updateduserinfo == null) return null;
 
         return updateduserinfo.UserInfoEntityToGetUserInfoDTO();
     }
