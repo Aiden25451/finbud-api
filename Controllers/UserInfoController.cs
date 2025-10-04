@@ -22,23 +22,23 @@ public class UserInfoController : ControllerBase
     [Authorize]
     public IActionResult TestPrivate()
     {
-        return Ok("Private controller is working!");
+        return StatusCode(200,"Private controller is working!");
     }
 
     [HttpPost]
-    // [Authorize]
+    [Authorize]
     public async Task<IActionResult> CreateUserInfo([FromBody] CreateUserInfoDTO request)
     {
         if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+            return StatusCode(400,ModelState);
 
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (currentUserId == null)
-            return Unauthorized();
+            return StatusCode(401);
 
         var userInfoResponse = await _userInfoService.CreateUserInfoAsync(request, currentUserId);
-        return Ok(userInfoResponse);
+        return StatusCode(200,userInfoResponse);
     }
 
     [HttpGet("{userId}")]
@@ -47,9 +47,9 @@ public class UserInfoController : ControllerBase
     {
         var userinfo = await _userInfoService.GetUserInfoByUserIdAsync(userId);
         if (userinfo == null)
-            return NotFound();
+            return StatusCode(404);
 
-        return Ok(userinfo);
+        return StatusCode(200,userinfo);
     }
 
     [HttpPut]
@@ -57,16 +57,16 @@ public class UserInfoController : ControllerBase
     public async Task<IActionResult> Update_UserInfo_Username([FromBody] UpdateUsernameDTO request)
     {
         if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+            return StatusCode(400, ModelState);
 
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
         if (currentUserId == null)
-            return Unauthorized();
+            return StatusCode(401);
 
         var userInfoResponse = await _userInfoService.UpdateUserInfoUsernameAsync(request, currentUserId);
         
-        return Ok(userInfoResponse);
+        return StatusCode(200,userInfoResponse);
     }
 
     [HttpDelete("{userId}")]
@@ -75,8 +75,8 @@ public class UserInfoController : ControllerBase
     {
         var deleted = await _userInfoService.DeleteUserInfoAsync(userId);
         if (!deleted)
-            return NotFound();
+            return StatusCode(404);
 
-        return NoContent();
+        return StatusCode(204);
     }
 }

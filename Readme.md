@@ -28,3 +28,18 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 - http://localhost:5062/swagger/index.html (Use this page for dev)
 
 9. In swagger, click authorize and type "Bearer \<Access Token From auth0 client\>" (This will give user access to authorization routes)
+
+
+## Endpoints
+
+UserInfo Controller:
+GET /api/UserInfo/{userId}
+POST /api/UserInfo
+PUT /api/UserInfo
+DELETE /api/UserInfo{userId}
+
+UserHistory Controller:
+GET /api/UserHistory/ --> 200 OK, 404 NOT FOUND
+POST /api/UserHistory/ --> 201 CREATED, 400 BAD REQUEST
+PUT /api/UserHistory/ --> 200 OK, 400 BAD REQUEST
+DELETE /api/UserHistory/ --> 204 NO CONTENT
