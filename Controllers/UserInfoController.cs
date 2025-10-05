@@ -41,7 +41,7 @@ public class UserInfoController : ControllerBase
 
         if(userInfoResponse == null) return StatusCode(400, "User Info may already exist in Database.");
 
-        return StatusCode(200,userInfoResponse);
+        return StatusCode(201,userInfoResponse);
     }
 
     [HttpGet]
@@ -65,7 +65,7 @@ public class UserInfoController : ControllerBase
 
     [HttpPut]
     [Authorize]
-    public async Task<IActionResult> Update_UserInfo_Username([FromBody] UpdateUsernameDTO request)
+    public async Task<IActionResult> UpdateUserInfoUsername([FromBody] UpdateUsernameDTO request)
     {
         if (!ModelState.IsValid)
             return StatusCode(400, ModelState);
