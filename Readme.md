@@ -43,3 +43,15 @@ GET /api/UserHistory/ --> 200 OK, 404 NOT FOUND
 POST /api/UserHistory/ --> 201 CREATED, 400 BAD REQUEST
 PUT /api/UserHistory/ --> 200 OK, 400 BAD REQUEST
 DELETE /api/UserHistory/ --> 204 NO CONTENT
+
+UserAcheivement Controller:
+GET /api/UserAchievement --> return list of all achievements by user id -> 200 OK, 404 NOT FOUND
+GET /api/UserAchievement/AchievementId --> return user achievement of specified achievement id for given user -> 201 CREATED, 404 NOT FOUND
+
+POST /api/UserAchievement --> enter new user acheivement in data table for this user only -> 200 OK, 400 BAD REQUEST
+
+PUT /api/UserAchievement/ --> update the status and or value, verify that the user can update it -> 200 OK, 404 NOT FOUND
+
+  
+Achievement Controller:
+GET /api/Achievement/AID --> entry from table

@@ -168,4 +168,76 @@ public class SupabaseDbContext
             return false;
         }
     }
+
+
+    //USER ACHIEVEMENT
+    public async Task<UserAchievement> CreateUserAchievementAsync(UserAchievement userAchievement)
+    {
+        var existingAchievement = await _client.From<UserAchievement>().Where(n => n.UserId == userAchievement.UserId && n.AchievementId == userAchievement.AchievementId).Get();
+        if(existingAchievement.Models.Count > 0)
+        {
+            Console.WriteLine("User achievement already exists for userId: " + userAchievement.UserId + " and achievementId: " + userAchievement.AchievementId);
+            return null;
+        }
+        
+        try{
+            var response = await _client.From<UserAchievement>().Insert(userAchievement);
+        return response.Models.First();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Error creating user achievement: " + ex.Message);
+            return null;
+        }
+        
+    }
+
+    public async Task<List<UserAchievement>> GetUserAchievementsAsync(string userId){
+        var response = await _client
+            .From<UserAchievement>()
+            .Where(n => n.UserId == userId)
+            .Get();
+
+        return response.Models;   
+    }
+
+    public async Task<UserAchievement?> GetUserAchievementByAchievementIdAsync(string userId, int achievementId)
+    {
+        var response = await _client
+            .From<UserAchievement>()
+            .Where(n => n.UserId == userId && n.AchievementId == achievementId)
+            .Get();
+
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<UserAchievement?> UpdateUserAchievementByAchievementIdAsync(UserAchievement userAchievement)
+    {
+        if(userAchievement.UserAchievementStatus != string.Empty){
+            var entry = await _client
+                .From<UserAchievement>()
+                .Where(u => u.UserId == userAchievement.UserId && u.AchievementId == userAchievement.AchievementId)
+                .Set(x => x.UserAchievementStatus, userAchievement.UserAchievementStatus)
+                .Update();
+        }
+
+        if(userAchievement.UserAchievementValue != -1)
+        {
+            var entry = await _client
+                .From<UserAchievement>()
+                .Where(u => u.UserId == userAchievement.UserId && u.AchievementId == userAchievement.AchievementId)
+                .Set(x => x.UserAchievementValue, userAchievement.UserAchievementValue)
+                .Update();
+        }
+
+        
+        var response = await _client
+                    .From<UserAchievement>()
+                    .Where(n => n.UserId == userAchievement.UserId && n.AchievementId == userAchievement.AchievementId)
+                    .Get();
+                
+                return response.Models.FirstOrDefault();
+    }
+
+
 }
