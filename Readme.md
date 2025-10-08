@@ -6,10 +6,13 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 
 ## Structure
 
+- .github/workflows: Currently just logic to redeploy aws lambda on commit to main
+- Authorization: Handle auth0 authentication and authorization
 - Controllers: Handle routing and high level logic, calls Services/ to work
 - Data: Contains logic for calls to database
 - Dto: Contains data structures for requests and results
 - Extensions: Serves only to breakup program.cs to make it more readable
+- Mapping: Functions to transform Dtos and Models
 - Models: Contains full definition of data structures
 - Services: Contains business logic, calls Data/ to work
 
@@ -28,6 +31,10 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 - http://localhost:5062/swagger/index.html (Use this page for dev)
 
 9. In swagger, click authorize and type "Bearer \<Access Token From auth0 client\>" (This will give user access to authorization routes)
+
+## Link to API
+
+https://xmcajo4o7osu3saaj3mbq5lwey0jubsv.lambda-url.us-east-2.on.aws/swagger/index.html
 
 
 ## Endpoints
@@ -55,3 +62,4 @@ PUT /api/UserAchievement/ --> update the status and or value, verify that the us
   
 Achievement Controller:
 GET /api/Achievement/AID --> entry from table --> not implemented yet
+
