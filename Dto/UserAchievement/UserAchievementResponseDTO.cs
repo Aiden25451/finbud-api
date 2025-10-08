@@ -3,9 +3,6 @@ using System.ComponentModel.DataAnnotations;
 
 public class UserAchievementResponseDTO
 {
-    // [Required]
-    // public List<int> UserHistory { get; set; } = new List<int>{1};
-
     [Required]
     public int UserAchievementId {get; set;} = 0;
 

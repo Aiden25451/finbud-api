@@ -9,7 +9,6 @@ public static class UserAchievementMappingExtensions
     {
         return new UserAchievement
         {
-            // UserAchievementId = 0,
             UserId = userId,
             UserAchievementStatus = dto.UserAchievementStatus,
             UserAchievementValue = dto.UserAchievementValue,
@@ -21,7 +20,6 @@ public static class UserAchievementMappingExtensions
     {
         return new UserAchievementResponseDTO
         {
-            // UserAchievementId= userAchievement.UserAchievementId,
             UserAchievementStatus = userAchievement.UserAchievementStatus,
             UserAchievementValue = userAchievement.UserAchievementValue,
             AchievementId = userAchievement.AchievementId,
@@ -29,7 +27,6 @@ public static class UserAchievementMappingExtensions
     }
 
     public static UserAchievement UpdateUserAchievementDtoToUserAchievementEntity(this UpdateUserAchievementDTO dto, string userId){
-        // string newStatus = 
         
         return new UserAchievement
         {

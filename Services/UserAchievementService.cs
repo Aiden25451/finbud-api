@@ -65,9 +65,4 @@ public class UserAchievementService : IUserAchievementService
 
         return updateduserachievement.UserAchievementEntityToUserAchievementResponseDTO();
     }
-
-    // public async Task<bool> DeleteUserHistoryByUserIdAsync(string userId)
-    // {
-    //     return await _context.DeleteUserHistoryAsync(userId);
-    // }
 }

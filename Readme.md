@@ -54,4 +54,4 @@ PUT /api/UserAchievement/ --> update the status and or value, verify that the us
 
   
 Achievement Controller:
-GET /api/Achievement/AID --> entry from table
+GET /api/Achievement/AID --> entry from table --> not implemented yet

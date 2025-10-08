@@ -8,6 +8,4 @@ public interface IUserInfoService
     Task<GetUserInfoDTO?> GetUserInfoByUserIdAsync(string userId);
     Task<GetUserInfoDTO?> UpdateUserInfoUsernameAsync(UpdateUsernameDTO request, string userId);
     Task<bool> DeleteUserInfoAsync(string userId);
-    // Task<GetUserInfoDTO?> GetMonkeyByIdAsync(int id);
-    // Task<bool> DeleteMonkeyAsync(int id);
 }

@@ -6,10 +6,6 @@ namespace FinbudApi.Models;
 [Table("UserAchievement")]
 public class UserAchievement : BaseModel
 {
-    // [PrimaryKey("user_achievement_id", false)]
-    // [Column("user_achievement_id")]
-    // public int UserAchievementId { get; set; } = 0;
-
     [Column("user_id")]
     public string UserId { get; set; } = String.Empty;
 
