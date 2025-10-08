@@ -35,3 +35,31 @@ FinBud RestAPI is a ASP.NET core web app which serves the website [FinBud](https
 ## Link to API
 
 https://xmcajo4o7osu3saaj3mbq5lwey0jubsv.lambda-url.us-east-2.on.aws/swagger/index.html
+
+
+## Endpoints
+
+UserInfo Controller:
+GET /api/UserInfo/ --> 200 OK, 404 NOT FOUND
+POST /api/UserInfo --> 200 OK, 400 BAD REQUEST 
+PUT /api/UserInfo --> 200 OK, 404 NOT FOUND
+DELETE /api/UserInfo --> 204, 
+
+UserHistory Controller:
+GET /api/UserHistory/ --> 200 OK, 404 NOT FOUND
+POST /api/UserHistory/ --> 201 CREATED, 400 BAD REQUEST
+PUT /api/UserHistory/ --> 200 OK, 400 BAD REQUEST
+DELETE /api/UserHistory/ --> 204 NO CONTENT
+
+UserAcheivement Controller:
+GET /api/UserAchievement --> return list of all achievements by user id -> 200 OK, 404 NOT FOUND
+GET /api/UserAchievement/AchievementId --> return user achievement of specified achievement id for given user -> 201 CREATED, 404 NOT FOUND
+
+POST /api/UserAchievement --> enter new user acheivement in data table for this user only -> 200 OK, 400 BAD REQUEST
+
+PUT /api/UserAchievement/ --> update the status and or value, verify that the user can update it -> 200 OK, 404 NOT FOUND
+
+  
+Achievement Controller:
+GET /api/Achievement/AID --> entry from table --> not implemented yet
+

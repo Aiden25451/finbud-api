@@ -1,4 +1,5 @@
 using FinbudApi.Models;
+using System;
 
 namespace FinbudApi.Data;
 
@@ -11,6 +12,7 @@ public class SupabaseDbContext
         _client = client;
     }
 
+    // MONKEY 
     public async Task<Monkey> CreateMonkeyAsync(Monkey monkey)
     {
         var response = await _client.From<Monkey>().Insert(monkey);
@@ -42,4 +44,200 @@ public class SupabaseDbContext
             return false;
         }
     }
+
+
+    // USER INFO
+    public async Task<UserInfo> CreateUserInfoAsync(UserInfo userinfo)
+    {
+        try{
+            var response = await _client.From<UserInfo>().Insert(userinfo);
+            return response.Models.First(); 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error creating user info: " + ex.Message);
+            return null;
+        }
+    }
+
+    public async Task<UserInfo> UpdateUserInfoUsernameAsync(UserInfo userinfo)
+    {
+        string userid = userinfo.UserId.ToString();
+        string username = userinfo.UserName.ToString();
+
+        var entry = await _client
+        .From<UserInfo>()
+        .Where(u => u.UserId == userid)            
+        .Set(x => x.UserName, username)
+        .Update();
+
+        var response = await _client
+            .From<UserInfo>()
+            .Where(n => n.UserId == userinfo.UserId)
+            .Get();
+        
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<UserInfo?> GetUserInfoByUserIdAsync(string userId)
+    {
+        var response = await _client
+            .From<UserInfo>()
+            .Where(n => n.UserId == userId)
+            .Get();
+
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<bool> DeleteUserInfoAsync(string userId)
+    {
+        try
+        {
+            await _client
+                .From<UserInfo>()
+                .Where(n => n.UserId == userId)
+                .Delete();
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+
+    // USER HISTORY
+    public async Task<UserHistory> CreateUserHistoryAsync(UserHistory userHistory)
+    {
+        try{
+            var response = await _client.From<UserHistory>().Insert(userHistory);
+        return response.Models.First();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Error creating user history: " + ex.Message);
+            return null;
+        }
+        
+    }
+
+    public async Task<UserHistory?> GetUserHistoryByUserIdAsync(string userId)
+    {
+        var response = await _client
+            .From<UserHistory>()
+            .Where(n => n.UserId == userId)
+            .Get();
+
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<UserHistory> UpdateUserHistoryByUserIdAsync(UserHistory userHistory)
+    {
+        string userid = userHistory.UserId.ToString();
+        List<int> userhistorydata = userHistory.UserHistoryData;
+
+        var entry = await _client
+        .From<UserHistory>()
+        .Where(u => u.UserId == userid)            
+        .Set(x => x.UserHistoryData, userhistorydata)
+        .Update();
+
+        var response = await _client
+            .From<UserHistory>()
+            .Where(n => n.UserId == userHistory.UserId)
+            .Get();
+        
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<bool> DeleteUserHistoryAsync(string userId)
+    {
+        try
+        {
+            await _client
+                .From<UserHistory>()
+                .Where(n => n.UserId == userId)
+                .Delete();
+
+            
+            Console.WriteLine("Deleted user history for userId: " + userId);
+            return true; 
+        } 
+        catch
+        {
+            return false;
+        }
+    }
+
+
+    //USER ACHIEVEMENT
+    public async Task<UserAchievement> CreateUserAchievementAsync(UserAchievement userAchievement)
+    {
+        var existingAchievement = await _client.From<UserAchievement>().Where(n => n.UserId == userAchievement.UserId && n.AchievementId == userAchievement.AchievementId).Get();
+        if(existingAchievement.Models.Count > 0)
+        {
+            Console.WriteLine("User achievement already exists for userId: " + userAchievement.UserId + " and achievementId: " + userAchievement.AchievementId);
+            return null;
+        }
+        
+        try{
+            var response = await _client.From<UserAchievement>().Insert(userAchievement);
+        return response.Models.First();
+        }
+        catch(Exception ex)
+        {
+            Console.WriteLine("Error creating user achievement: " + ex.Message);
+            return null;
+        }
+        
+    }
+
+    public async Task<List<UserAchievement>> GetUserAchievementsAsync(string userId){
+        var response = await _client
+            .From<UserAchievement>()
+            .Where(n => n.UserId == userId)
+            .Get();
+
+        return response.Models;   
+    }
+
+    public async Task<UserAchievement?> GetUserAchievementByAchievementIdAsync(string userId, int achievementId)
+    {
+        var response = await _client
+            .From<UserAchievement>()
+            .Where(n => n.UserId == userId && n.AchievementId == achievementId)
+            .Get();
+
+        return response.Models.FirstOrDefault();
+    }
+
+    public async Task<UserAchievement?> UpdateUserAchievementByAchievementIdAsync(UserAchievement userAchievement)
+    {
+        if(userAchievement.UserAchievementStatus != string.Empty){
+            var entry = await _client
+                .From<UserAchievement>()
+                .Where(u => u.UserId == userAchievement.UserId && u.AchievementId == userAchievement.AchievementId)
+                .Set(x => x.UserAchievementStatus, userAchievement.UserAchievementStatus)
+                .Update();
+        }
+
+        if(userAchievement.UserAchievementValue != -1)
+        {
+            var entry = await _client
+                .From<UserAchievement>()
+                .Where(u => u.UserId == userAchievement.UserId && u.AchievementId == userAchievement.AchievementId)
+                .Set(x => x.UserAchievementValue, userAchievement.UserAchievementValue)
+                .Update();
+        }
+
+        
+        var response = await _client
+                    .From<UserAchievement>()
+                    .Where(n => n.UserId == userAchievement.UserId && n.AchievementId == userAchievement.AchievementId)
+                    .Get();
+                
+                return response.Models.FirstOrDefault();
+    }
+
+
 }
