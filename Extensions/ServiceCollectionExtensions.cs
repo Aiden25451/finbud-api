@@ -32,6 +32,10 @@ public static class ServiceCollectionExtensions
     {
         services.AddScoped<SupabaseDbContext>();
         services.AddScoped<IMonkeyService, MonkeyService>();
+        services.AddScoped<IUserInfoService, UserInfoService>();
+        services.AddScoped<IUserHistoryService, UserHistoryService>();
+        services.AddScoped<IUserAchievementService, UserAchievementService>();
+
 
         // Add more services here as your app grows
         // services.AddScoped<IUserService, UserService>();
