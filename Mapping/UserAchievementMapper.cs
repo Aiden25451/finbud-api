@@ -5,14 +5,16 @@ namespace FinbudApi.Mapping;
 
 public static class UserAchievementMappingExtensions
 {
-    public static UserAchievement CreateUserAchievementDtoToUserAchievementEntity(this CreateUserAchievementDTO dto, string userId)
+    public static InsertUserAchievement CreateUserAchievementDtoToInsertUserAchievementEntity(this CreateUserAchievementDTO dto, string userId)
     {
-        return new UserAchievement
+        return new InsertUserAchievement
         {
             UserId = userId,
             UserAchievementStatus = dto.UserAchievementStatus,
-            UserAchievementValue = dto.UserAchievementValue,
+            UserAchievementProgressValue = dto.UserAchievementProgressValue,
+            UserAchievementGoalValue = dto.UserAchievementGoalValue,
             AchievementId = dto.AchievementId,
+            UserAchievementBoolean = 0 
         };
     }
 
@@ -21,8 +23,11 @@ public static class UserAchievementMappingExtensions
         return new UserAchievementResponseDTO
         {
             UserAchievementStatus = userAchievement.UserAchievementStatus,
-            UserAchievementValue = userAchievement.UserAchievementValue,
+            UserAchievementProgressValue = userAchievement.UserAchievementProgressValue,
+            UserAchievementGoalValue = userAchievement.UserAchievementGoalValue,
             AchievementId = userAchievement.AchievementId,
+            UserAchievementId = userAchievement.UserAchievementId,
+            UserAchievementBoolean = userAchievement.UserAchievementBoolean
         };
     }
 
@@ -32,7 +37,9 @@ public static class UserAchievementMappingExtensions
         {
             UserId = userId,
             UserAchievementStatus = dto.UserAchievementStatus,
-            UserAchievementValue = dto.UserAchievementValue,
+            UserAchievementGoalValue = dto.UserAchievementGoalValue,
+            UserAchievementProgressValue = dto.UserAchievementProgressValue,
+            UserAchievementBoolean = dto.UserAchievementBoolean,
             AchievementId = dto.AchievementId
         };
     }
