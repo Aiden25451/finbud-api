@@ -17,7 +17,7 @@ public class UserAchievementService : IUserAchievementService
     public async Task<UserAchievementResponseDTO?> CreateUserAchievementAsync(CreateUserAchievementDTO request, string userId)
     {
 
-        var userachievement = request.CreateUserAchievementDtoToUserAchievementEntity(userId);
+        var userachievement = request.CreateUserAchievementDtoToInsertUserAchievementEntity(userId);
 
         var createduserachievement = await _context.CreateUserAchievementAsync(userachievement);
 

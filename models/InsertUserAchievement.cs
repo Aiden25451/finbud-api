@@ -4,13 +4,10 @@ using Supabase.Postgrest.Models;
 namespace FinbudApi.Models;
 
 [Table("UserAchievement")]
-public class UserAchievement : BaseModel
+public class InsertUserAchievement : BaseModel
 {
     [Column("user_id")]
     public string UserId { get; set; } = String.Empty;
-
-    [Column("user_achievement_id")]
-    public int UserAchievementId {get; set;} = -1;
 
     [Column("user_achievement_status")]
     public string UserAchievementStatus {get; set;} = "INACTIVE";
