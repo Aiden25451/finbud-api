@@ -63,7 +63,7 @@ public class UserInfoController : ControllerBase
         return StatusCode(200,userinfo);
     }
 
-    [HttpPut]
+    [HttpPut("username")]
     [Authorize]
     public async Task<IActionResult> UpdateUserInfoUsername([FromBody] UpdateUsernameDTO request)
     {
@@ -76,6 +76,25 @@ public class UserInfoController : ControllerBase
             return StatusCode(401);
 
         var userInfoResponse = await _userInfoService.UpdateUserInfoUsernameAsync(request, currentUserId);
+        
+        if(userInfoResponse == null) return StatusCode(404, "User Info not found in database.");
+        
+        return StatusCode(200,userInfoResponse);
+    }
+
+    [HttpPut("userprofilepicture")]
+    [Authorize]
+    public async Task<IActionResult> UpdateUserInfoUserProfilePicture([FromBody] UpdateUserProfilePictureDTO request)
+    {
+        if (!ModelState.IsValid)
+            return StatusCode(400, ModelState);
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return StatusCode(401);
+
+        var userInfoResponse = await _userInfoService.UpdateUserInfoUserProfilePictureAsync(request, currentUserId);
         
         if(userInfoResponse == null) return StatusCode(404, "User Info not found in database.");
         

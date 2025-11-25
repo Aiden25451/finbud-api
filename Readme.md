@@ -42,7 +42,8 @@ https://xmcajo4o7osu3saaj3mbq5lwey0jubsv.lambda-url.us-east-2.on.aws/swagger/ind
 UserInfo Controller:
 GET /api/UserInfo/ --> 200 OK, 404 NOT FOUND
 POST /api/UserInfo --> 200 OK, 400 BAD REQUEST 
-PUT /api/UserInfo --> 200 OK, 404 NOT FOUND
+PUT /api/UserInfo/username --> 200 OK, 404 NOT FOUND
+PUT /api/UserInfo/userprofilepicture --> 200 OK, 404 NOT FOUND
 DELETE /api/UserInfo --> 204, 
 
 UserHistory Controller:

@@ -15,4 +15,7 @@ public class UserInfo : BaseModel
 
     [Column("created_at")]
     public DateTime CreatedAt { get; set; }
+
+    [Column("user_profile_picture")]
+    public string UserProfilePicture { get; set; } = String.Empty;
 }

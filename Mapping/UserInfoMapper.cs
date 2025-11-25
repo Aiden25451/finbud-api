@@ -21,7 +21,7 @@ public static class UserInfoMappingExtensions
         {
             UserName = userinfo.UserName,
             CreatedAt = userinfo.CreatedAt,
-            UserId = userinfo.UserId,
+            UserProfilePicture = userinfo.UserProfilePicture
         };
     }
 
@@ -33,5 +33,16 @@ public static class UserInfoMappingExtensions
             UserId = userId,
         };
     }
+
+    public static UserInfo UpdateUserInfoUserProfilePictureDtoToUserInfoEntity(this UpdateUserProfilePictureDTO dto, string userId)
+    {
+        return new UserInfo
+        {
+            UserProfilePicture = dto.UserProfilePicture,
+            UserId = userId,
+        };
+    }
+
+
 
 }

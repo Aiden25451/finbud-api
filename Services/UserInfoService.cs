@@ -45,6 +45,17 @@ public class UserInfoService : IUserInfoService
         return updateduserinfo.UserInfoEntityToGetUserInfoDTO();
     }
 
+    public async Task<GetUserInfoDTO?> UpdateUserInfoUserProfilePictureAsync(UpdateUserProfilePictureDTO request, string userId)
+    {
+        var userinfo = request.UpdateUserInfoUserProfilePictureDtoToUserInfoEntity(userId);
+
+        var updateduserinfo = await _context.UpdateUserInfoUserProfilePictureAsync(userinfo);
+
+        if(updateduserinfo == null) return null;
+
+        return updateduserinfo.UserInfoEntityToGetUserInfoDTO();
+    }
+
     public async Task<bool> DeleteUserInfoAsync(string userId)
     {
         return await _context.DeleteUserInfoAsync(userId);
