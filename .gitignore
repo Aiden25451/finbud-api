@@ -7,3 +7,5 @@ aws-lambda-tools-defaults.json
 serverless.template
 
 commands.txt
+
+config.json

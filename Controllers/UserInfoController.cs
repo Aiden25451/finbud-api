@@ -49,7 +49,7 @@ public class UserInfoController : ControllerBase
     public async Task<IActionResult> GetUserInfoByUserId()
     {
         if (!ModelState.IsValid)
-            return StatusCode(400,ModelState);
+            return StatusCode(400, ModelState);
 
         var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
@@ -60,7 +60,28 @@ public class UserInfoController : ControllerBase
         if (userinfo == null)
             return StatusCode(404);
 
-        return StatusCode(200,userinfo);
+        return StatusCode(200, userinfo);
+    }
+
+    [HttpGet("username")]
+    [Authorize]
+    public async Task<IActionResult> GetUsernameByUserId()
+    {
+        if (!ModelState.IsValid)
+            return StatusCode(400, ModelState);
+
+        var currentUserId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        if (currentUserId == null)
+            return StatusCode(401);
+
+        var userinfo = await _userInfoService.GetUserInfoByUserIdAsync(currentUserId);
+        if (userinfo == null)
+            return StatusCode(404);
+
+        var username = new UsernameResponseDTO { UserName = userinfo.UserName };
+
+        return StatusCode(200, username);
     }
 
     [HttpPut("username")]
